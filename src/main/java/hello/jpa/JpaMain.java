@@ -16,17 +16,29 @@ public class JpaMain {
 
 		// 실행 code 작성
 		try {
+
 /*
 			// 추가
 			Member member = new Member();
-			member.setId(2L);
-			member.setName("helloB");
+			member.setId(1L);
+			member.setName("helloA");
 			em.persist(member); // 저장
 */
-			// 조회
-			Member findMember = em.find(Member.class, 1L);
+
+			Member findMember = em.find(Member.class, 1L); // 조회
+/*
 			System.out.println("findMember.id = "+findMember.getId());
 			System.out.println("findMember.name = "+findMember.getName());
+*/
+/*
+			// 삭제
+			em.remove(findMember);
+*/
+/*
+			// 수정
+			findMember.setName("HelloJPA"); // 따로 저장 안해도 됨
+*/
+
 
 			tx.commit(); // 트랜잭션 커밋
 		} catch (Exception e) {
