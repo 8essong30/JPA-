@@ -15,16 +15,26 @@ public class JpaMain {
 		tx.begin();
 
 		// 실행 code 작성
-		// 추가
-		Member member = new Member();
-		member.setId(1L);
-		member.setName("helloA");
-		em.persist(member); // 저장
+		try {
+/*
+			// 추가
+			Member member = new Member();
+			member.setId(2L);
+			member.setName("helloB");
+			em.persist(member); // 저장
+*/
+			// 조회
+			Member findMember = em.find(Member.class, 1L);
+			System.out.println("findMember.id = "+findMember.getId());
+			System.out.println("findMember.name = "+findMember.getName());
 
-		tx.commit(); // 트랜잭션 커밋
-
-		// 꼭 닫아줘야함
-		em.close();
+			tx.commit(); // 트랜잭션 커밋
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			// 꼭 닫아줘야함
+			em.close();
+		}
 		emf.close();
 	}
 }
