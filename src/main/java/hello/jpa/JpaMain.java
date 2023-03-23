@@ -1,5 +1,7 @@
 package hello.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -25,7 +27,7 @@ public class JpaMain {
 			em.persist(member); // 저장
 */
 
-			Member findMember = em.find(Member.class, 1L); // 조회
+			// Member findMember = em.find(Member.class, 1L); // 조회
 /*
 			System.out.println("findMember.id = "+findMember.getId());
 			System.out.println("findMember.name = "+findMember.getName());
@@ -38,10 +40,18 @@ public class JpaMain {
 			// 수정
 			findMember.setName("HelloJPA"); // 따로 저장 안해도 됨
 */
+			// JPQL
+			List<Member> result = em.createQuery("select m from Member as m", Member.class)
+				.setFirstResult(1) //limit
+				.setMaxResults(10) // offset 페이징처리
+				.getResultList();
 
+			for (Member member : result) {
+				System.out.println("member.name = " + member.getName());
+			}
 
 			tx.commit(); // 트랜잭션 커밋
-		} catch (Exception e) {
+		} catch (Exception e) { // 예외처리
 			tx.rollback();
 		} finally {
 			// 꼭 닫아줘야함
