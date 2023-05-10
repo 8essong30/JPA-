@@ -19,10 +19,12 @@ public class JpaMain {
 		// 실행 code 작성
 		try {
 
-			Member findMember1 = em.find(Member.class, 101L);
-			Member findMember2 = em.find(Member.class, 101L);
+			Member member1 = new Member(140L, "A");
+			Member member2 = new Member(130L, "B");
 
-			System.out.println("result = " + (findMember1 == findMember2)); // true
+			em.persist(member1);
+			em.persist(member2);
+			System.out.println("=================="); // 이거 이후 쿼리 두개 날라감
 
 			tx.commit(); // 트랜잭션 커밋
 		} catch (Exception e) { // 예외처리
