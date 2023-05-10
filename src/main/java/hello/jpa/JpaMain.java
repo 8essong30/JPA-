@@ -19,20 +19,10 @@ public class JpaMain {
 		// 실행 code 작성
 		try {
 
-			// 비영속. 객체를 생성만 한 상태
-			Member member = new Member();
-			member.setId(101L);
-			member.setName("helloJPA");
+			Member findMember1 = em.find(Member.class, 101L);
+			Member findMember2 = em.find(Member.class, 101L);
 
-			// 영속. 객체를 저장한 상태
-			System.out.println("========= BEFORE =========");
-			em.persist(member); // 1차캐시에 저장
-			System.out.println("========= AFTER =========");
-
-			Member findMember = em.find(Member.class, 101L); // 1차캐시에 있는 애를 조회. 조회쿼리 안날라감
-
-			System.out.println("findMember.id = " + findMember.getId());
-			System.out.println("findMember.name = " + findMember.getName());
+			System.out.println("result = " + (findMember1 == findMember2)); // true
 
 			tx.commit(); // 트랜잭션 커밋
 		} catch (Exception e) { // 예외처리
