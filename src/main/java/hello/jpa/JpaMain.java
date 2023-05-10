@@ -18,10 +18,18 @@ public class JpaMain {
 
 		// 실행 code 작성
 		try {
-
+			// 영속
 			Member member = em.find(Member.class, 150L);
-			member.setName("ZZZ"); // 더티체킹으로 업데이트쿼리가 날라가지
-			// em.persist(member); // 자바 컬렉션에서 값 변경하는 것처럼 해당 코드는 필요없음.
+			member.setName("AAAA");
+
+/*
+			em.detach(member); // 준영속상태로 만들어
+			// 그러면 업데이트 쿼리 안날라감
+*/
+			em.clear(); // 영속성컨텍스트 초기화
+			// 이래도 업데이트 쿼리 안날라가지
+			Member member2 = em.find(Member.class, 150L);
+			// 이러면 select쿼리 총 두 번 날라감. (clear()없으면 1차캐시로 한 번 쿼리로 조회하는데..)
 
 			tx.commit(); // 트랜잭션 커밋
 		} catch (Exception e) { // 예외처리
