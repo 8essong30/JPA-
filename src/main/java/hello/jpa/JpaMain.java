@@ -19,12 +19,9 @@ public class JpaMain {
 		// 실행 code 작성
 		try {
 
-			Member member1 = new Member(140L, "A");
-			Member member2 = new Member(130L, "B");
-
-			em.persist(member1);
-			em.persist(member2);
-			System.out.println("=================="); // 이거 이후 쿼리 두개 날라감
+			Member member = em.find(Member.class, 150L);
+			member.setName("ZZZ"); // 더티체킹으로 업데이트쿼리가 날라가지
+			// em.persist(member); // 자바 컬렉션에서 값 변경하는 것처럼 해당 코드는 필요없음.
 
 			tx.commit(); // 트랜잭션 커밋
 		} catch (Exception e) { // 예외처리
